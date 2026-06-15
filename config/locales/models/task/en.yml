@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    attributes:
+      task:
+        statuses:
+          in_progress: In Progress
+          completed: Completed
+          archived: Archived
