@@ -1,10 +1,24 @@
 <% content_for :title, "Editing task" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing task</h1>
+<div class="mx-auto w-full max-w-3xl space-y-8">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <%= link_to tasks_path, class: "inline-flex items-center gap-2 text-sm font-medium text-slate-400 transition hover:text-white" do %>
+      <svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+        <path fill-rule="evenodd" d="M11.78 4.22a.75.75 0 0 1 0 1.06L7.06 10l4.72 4.72a.75.75 0 1 1-1.06 1.06l-5.25-5.25a.75.75 0 0 1 0-1.06l5.25-5.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+      </svg>
+      Back to tasks
+    <% end %>
+
+    <%= link_to "View task", @task, class: "inline-flex items-center justify-center rounded-full border border-white/10 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-200 shadow-sm transition hover:border-white/20 hover:bg-slate-800" %>
+  </div>
+
+  <section class="rounded-[2rem] border border-white/10 bg-slate-900/80 px-6 py-8 shadow-2xl shadow-black/20 backdrop-blur-xl sm:px-8 sm:py-10">
+    <p class="text-sm font-semibold uppercase tracking-[0.22em] text-indigo-300">Update task</p>
+    <h1 class="mt-3 text-4xl font-semibold tracking-tight text-white sm:text-5xl">Refine this task</h1>
+    <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
+      Adjust the task details, keep the description clear, and update the status to reflect the latest progress.
+    </p>
+  </section>
 
   <%= render "form", task: @task %>
-
-  <%= link_to "Show this task", @task, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to tasks", tasks_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>

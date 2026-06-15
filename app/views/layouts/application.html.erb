@@ -23,10 +23,21 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= render "shared/navbar"%>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div class="absolute left-1/2 top-[-16rem] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-3xl"></div>
+      <div class="absolute right-[-6rem] top-64 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="absolute left-[-8rem] bottom-0 h-80 w-80 rounded-full bg-violet-500/10 blur-3xl"></div>
+    </div>
+
+    <div class="relative min-h-screen">
+      <%= render "shared/navbar" %>
+
+      <main class="mx-auto flex w-full max-w-6xl px-4 pb-16 pt-20 sm:px-6 lg:px-8">
+        <div class="w-full">
+          <%= yield %>
+        </div>
+      </main>
+    </div>
   </body>
 </html>

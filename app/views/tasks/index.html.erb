@@ -1,29 +1,84 @@
 <% content_for :title, "Tasks" %>
+<% in_progress_tasks = @tasks.select { |task| task.status == "in_progress" } %>
+<% completed_tasks = @tasks.select { |task| task.status == "completed" } %>
 
-<div class="w-full">
+<div class="w-full space-y-8">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p id="notice" class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200 shadow-sm">
+      <%= notice %>
+    </p>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Tasks</h1>
-    <%= link_to "New task", new_task_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-  </div>
+  <section class="rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
+    <div class="flex flex-col gap-8">
+      <div>
+        <h1 class="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Tasks</h1>
+        <p class="mt-2 text-sm leading-7 text-slate-400">Your active tasks are grouped by progress so they are easier to scan.</p>
+      </div>
 
-  <div id="tasks" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @tasks.any? %>
-      <% @tasks.each do |task| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render task %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", task, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_task_path(task), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= button_to "Destroy", task, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+      <div class="space-y-8">
+        <section class="space-y-4">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-white">In Progress</h2>
+              <p class="text-sm text-slate-400">Tasks currently being worked on.</p>
+            </div>
+            <span class="inline-flex items-center rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-300 ring-1 ring-inset ring-amber-400/20">
+              <%= pluralize(in_progress_tasks.count, "task") %>
+            </span>
           </div>
-        </div>
-      <% end %>
-    <% else %>
-      <p class="text-center my-10">No tasks found.</p>
-    <% end %>
-  </div>
+
+          <% if in_progress_tasks.any? %>
+            <div class="grid gap-4">
+              <% in_progress_tasks.each do |task| %>
+                <article class="rounded-3xl border border-white/10 bg-slate-950/70 p-6 shadow-lg shadow-black/20 transition hover:border-indigo-400/30 hover:bg-slate-950">
+                  <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                    <%= render task %>
+                    <div class="w-full lg:w-auto">
+                      <%= link_to "Show", task, class: "inline-flex w-full items-center justify-center rounded-full bg-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 lg:w-auto" %>
+                    </div>
+                  </div>
+                </article>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="rounded-3xl border border-dashed border-white/10 bg-slate-950/40 px-6 py-10 text-center text-sm text-slate-400">
+              No tasks are currently in progress.
+            </div>
+          <% end %>
+        </section>
+
+        <section class="space-y-4">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-white">Completed</h2>
+              <p class="text-sm text-slate-400">Tasks that have already been finished.</p>
+            </div>
+            <span class="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300 ring-1 ring-inset ring-emerald-400/20">
+              <%= pluralize(completed_tasks.count, "task") %>
+            </span>
+          </div>
+
+          <% if completed_tasks.any? %>
+            <div class="grid gap-4">
+              <% completed_tasks.each do |task| %>
+                <article class="rounded-3xl border border-white/10 bg-slate-950/70 p-6 shadow-lg shadow-black/20 transition hover:border-emerald-400/30 hover:bg-slate-950">
+                  <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                    <%= render task %>
+                    <div class="w-full lg:w-auto">
+                      <%= link_to "Show", task, class: "inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-slate-900 px-5 py-3 text-sm font-semibold text-slate-200 shadow-sm transition hover:border-white/20 hover:bg-slate-800 lg:w-auto" %>
+                    </div>
+                  </div>
+                </article>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="rounded-3xl border border-dashed border-white/10 bg-slate-950/40 px-6 py-10 text-center text-sm text-slate-400">
+              No completed tasks yet.
+            </div>
+          <% end %>
+        </section>
+      </div>
+    </div>
+  </section>
 </div>

@@ -1,10 +1,17 @@
-<div id="<%= dom_id task %>" class="w-full sm:w-auto my-5 space-y-5">
-  <div>
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= task.name %>
-  </div>
-  <div>
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= task.description %>
+<div id="<%= dom_id task %>" class="min-w-0 flex-1">
+  <div class="space-y-4">
+    <div class="flex flex-wrap items-center gap-3">
+      <h2 class="text-xl font-semibold tracking-tight text-white"><%= task.name.presence || "Untitled task" %></h2>
+
+      <% if task.status.present? %>
+        <span class="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ring-1 ring-inset <%= task_status_badge_classes(task.status) %>">
+          <%= task.human_enum_value(:status) %>
+        </span>
+      <% end %>
+    </div>
+
+    <p class="max-w-3xl text-sm leading-7 text-slate-300">
+      <%= task.description.presence || "No description has been added for this task yet." %>
+    </p>
   </div>
 </div>
