@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_15_152914) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_16_065823) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,11 +18,42 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_15_152914) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "task_status", ["in_progress", "completed", "archived"]
 
+  create_table "groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "ip_address"
+    t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
+    t.bigint "group_id", null: false
     t.string "name"
     t.enum "status", enum_type: "task_status"
     t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_tasks_on_group_id"
   end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email_address", null: false
+    t.bigint "group_id", null: false
+    t.string "password_digest", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["group_id"], name: "index_users_on_group_id"
+  end
+
+  add_foreign_key "sessions", "users"
+  add_foreign_key "tasks", "groups"
+  add_foreign_key "users", "groups"
 end

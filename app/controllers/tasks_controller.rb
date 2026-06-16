@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.active
+    @tasks = Current.user.group.tasks.active
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -21,7 +21,7 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = Current.user.group.tasks.new(task_params)
 
     respond_to do |format|
       if @task.save

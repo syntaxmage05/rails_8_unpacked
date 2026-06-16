@@ -1,9 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  description: MyText
+firts_task:
+  name: Clean Garage
+  description: Make sure to clean the garage please.
+  status: in_progress
+  group: one 
 
-two:
-  name: MyString
-  description: MyText
+second_task:
+  name: Clean the kitchen
+  description: Clean up the kitchen and put away the dishes.
+  status: in_progress
+  group: one 
+
+third_task:
+  name: Clean House
+  description: Clean up the kitchen and put away the dishes
+  status: completed
+  group: one 
+
+fourth_task:
+  name: Learn Rails 8 unpacked
+  description: Learn the new sauce things in rails 8
+  status: completed
+  group: two 
