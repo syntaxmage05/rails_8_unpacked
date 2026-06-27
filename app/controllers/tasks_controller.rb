@@ -8,6 +8,8 @@ class TasksController < ApplicationController
 
   # GET /tasks/1 or /tasks/1.json
   def show
+    @messages = @task.messages.includes(:user).order(created_at: :desc)
+    @message = @task.messages.build
   end
 
   # GET /tasks/new
@@ -60,7 +62,7 @@ class TasksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params.expect(:id))
+      @task = Current.user.group.tasks.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

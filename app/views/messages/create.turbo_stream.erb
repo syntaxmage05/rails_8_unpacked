@@ -1,0 +1,17 @@
+<%= turbo_stream.replace "new_message" do %>
+  <%= render "messages/form", task: @task, message: @message %>
+<% end %>
+
+<%= turbo_stream.replace "message_notice" do %>
+  <%= render "messages/notice", notice: @message_notice %>
+<% end %>
+
+<% if @created_message.present? %>
+  <%= turbo_stream.replace "message_count" do %>
+    <%= render "messages/count", count: @messages.size %>
+  <% end %>
+
+  <%= turbo_stream.replace "messages_list" do %>
+    <%= render "messages/list", messages: @messages %>
+  <% end %>
+<% end %>

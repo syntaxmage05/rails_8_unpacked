@@ -19,7 +19,7 @@
         <p class="text-sm font-semibold uppercase tracking-[0.22em] text-indigo-300">Task overview</p>
         <h1 class="text-4xl font-semibold tracking-tight text-white sm:text-5xl"><%= @task.name.presence || "Untitled task" %></h1>
         <p class="max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-          Review the task details, update its progress, or remove it when the work is complete.
+          Review the task details, message collaborators, and keep the discussion attached to the work.
         </p>
       </div>
     </div>
@@ -27,6 +27,22 @@
 
   <section class="rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
     <%= render @task %>
+  </section>
+
+  <section class="rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8">
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight text-white">Messages</h2>
+          <p class="mt-2 text-sm leading-7 text-slate-400">See who said what and when, directly from this task.</p>
+        </div>
+        <%= render "messages/count", count: @messages.size %>
+      </div>
+
+      <%= render "messages/notice", notice: nil %>
+      <%= render "messages/form", task: @task, message: @message %>
+      <%= render "messages/list", messages: @messages %>
+    </div>
   </section>
 
   <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
