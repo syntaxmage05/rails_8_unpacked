@@ -36,6 +36,7 @@
           <h2 class="text-2xl font-semibold tracking-tight text-white">Messages</h2>
           <p class="mt-2 text-sm leading-7 text-slate-400">See who said what and when, directly from this task.</p>
         </div>
+        <%= turbo_stream_from @task, "messages" %>
         <%= render "messages/count", count: @messages.size %>
       </div>
 

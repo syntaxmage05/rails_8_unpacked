@@ -36,3 +36,6 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+/rails_8_unpacked_development_cable
+/.vscode/
+/rails_8_unpacked_development_cache
